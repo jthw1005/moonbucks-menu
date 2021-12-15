@@ -1,11 +1,23 @@
 const $ = (selector) => document.querySelector(selector);
 
 function App() {
+  const updatedMenuCount = () => {
+    const menuCount = $("#espresso-menu-list").querySelectorAll("li").length;
+    $(".menu-count").innerText = `총 ${menuCount}개`;
+  };
+
   $("#espresso-menu-list").addEventListener("click", (event) => {
     if (event.target.classList.contains("menu-edit-button")) {
       const $menuName = event.target.closest("li").querySelector(".menu-name");
       const updatedMenuName = prompt("메뉴명을 수정하세요.", $menuName.innerText);
       $menuName.innerText = updatedMenuName;
+    }
+
+    if (event.target.classList.contains("menu-remove-button")) {
+      if (confirm("삭제하시겠습니까?")) {
+        event.target.closest("li").remove();
+        updatedMenuCount();
+      }
     }
   });
 
@@ -38,8 +50,7 @@ function App() {
 </li>`;
     };
     $("#espresso-menu-list").insertAdjacentHTML("beforeend", menuItemTemplate(espressoMenuName));
-    const menuCount = $("#espresso-menu-list").querySelectorAll("li").length;
-    $(".menu-count").innerText = `총 ${menuCount}개`;
+    updatedMenuCount();
     $("#espresso-menu-name").value = "";
   };
 
