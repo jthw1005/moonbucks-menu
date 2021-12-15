@@ -1,6 +1,14 @@
 const $ = (selector) => document.querySelector(selector);
 
 function App() {
+  $("#espresso-menu-list").addEventListener("click", (event) => {
+    if (event.target.classList.contains("menu-edit-button")) {
+      const $menuName = event.target.closest("li").querySelector(".menu-name");
+      const updatedMenuName = prompt("메뉴명을 수정하세요.", $menuName.innerText);
+      $menuName.innerText = updatedMenuName;
+    }
+  });
+
   $("#espresso-menu-form").addEventListener("submit", (event) => {
     event.preventDefault();
   });
